@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Expanded(
           child: Image.network(
-            'https://c8.alamy.com/comp/2A8EGJR/text-sign-showing-career-fair-business-photo-showcasing-an-event-at-which-job-seekers-can-meet-possible-employers-2A8EGJR.jpg',
+            'https://plus.unsplash.com/premium_photo-1681487732859-c2a780022063?q=80&w=2018&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             fit: BoxFit.cover,
           ),
         ),
@@ -95,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor:
+                            const Color.fromARGB(255, 42, 146, 230),
                         foregroundColor: const Color.fromARGB(255, 13, 13, 14),
                       ),
                       onPressed: () {},
