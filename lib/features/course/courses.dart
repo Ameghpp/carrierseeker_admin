@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common_widget/custom_search.dart';
 import 'package:flutter_application_1/features/course/add_edit_course_dialog.dart';
+import 'package:flutter_application_1/features/course/course_details_screen.dart';
 import 'package:flutter_application_1/features/course/courses_bloc/courses_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -156,6 +157,16 @@ class _CoursesState extends State<Courses> {
                                 Navigator.pop(context);
                               },
                               secondaryButton: 'Cancel',
+                            ),
+                          );
+                        },
+                        onDetail: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CourseDetailsScreen(
+                                courseId: _courses[index]['id'],
+                              ),
                             ),
                           );
                         },

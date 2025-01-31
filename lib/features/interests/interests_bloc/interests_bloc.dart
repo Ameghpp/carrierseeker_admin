@@ -22,6 +22,9 @@ class InterestsBloc extends Bloc<InterestsEvent, InterestsState> {
           if (event.params['query'] != null) {
             query = query.ilike('name', '%${event.params['query']}%');
           }
+          if (event.params['limit'] != null) {
+            await query.limit(event.params['limit']);
+          }
 
           List<Map<String, dynamic>> interests =
               await query.order('name', ascending: true);

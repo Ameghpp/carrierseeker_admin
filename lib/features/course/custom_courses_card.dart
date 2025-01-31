@@ -6,7 +6,7 @@ class CustomCourseCard extends StatelessWidget {
   final String image;
   final String name;
   final String description;
-  final Function() onEdit, onDelete;
+  final Function() onEdit, onDelete, onDetail;
 
   const CustomCourseCard({
     super.key,
@@ -15,6 +15,7 @@ class CustomCourseCard extends StatelessWidget {
     required this.image,
     required this.onEdit,
     required this.onDelete,
+    required this.onDetail,
   });
 
   @override
@@ -69,7 +70,7 @@ class CustomCourseCard extends StatelessWidget {
                     ),
                   ),
                   CustomButton(
-                    onPressed: () {},
+                    onPressed: onDetail,
                     label: 'Details',
                   ),
                 ],

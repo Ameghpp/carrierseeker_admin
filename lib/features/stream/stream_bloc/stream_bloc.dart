@@ -22,6 +22,9 @@ class StreamBloc extends Bloc<StreamEvent, StreamState> {
           if (event.params['query'] != null) {
             query = query.ilike('name', '%${event.params['query']}%');
           }
+          if (event.params['limit'] != null) {
+            await query.limit(event.params['limit']);
+          }
 
           List<Map<String, dynamic>> streams =
               await query.order('name', ascending: true);

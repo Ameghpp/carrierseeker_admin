@@ -15,6 +15,12 @@ final class CoursesGetSuccessState extends CoursesState {
   CoursesGetSuccessState({required this.courses});
 }
 
+final class CoursesGetByIdSuccessState extends CoursesState {
+  final Map<String, dynamic> courses;
+
+  CoursesGetByIdSuccessState({required this.courses});
+}
+
 final class CoursesFailureState extends CoursesState {
   final String message;
 

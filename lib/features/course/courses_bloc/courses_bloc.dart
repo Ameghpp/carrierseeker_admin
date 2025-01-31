@@ -15,7 +15,10 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
       try {
         emit(CoursesLoadingState());
         SupabaseQueryBuilder table = Supabase.instance.client.from('courses');
-
+        SupabaseQueryBuilder courseInterestTable =
+            Supabase.instance.client.from('course_interests');
+        SupabaseQueryBuilder courseStreamTable =
+            Supabase.instance.client.from('course_streams');
         if (event is GetAllCoursesEvent) {
           PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
               table.select('*');
@@ -46,6 +49,25 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
           emit(CoursesSuccessState());
         } else if (event is DeleteCourseEvent) {
           await table.delete().eq('id', event.courseId);
+          emit(CoursesSuccessState());
+        } else if (event is GetCoursesByIdEvent) {
+          Map<String, dynamic> courseData = await table
+              .select(
+                  '''*,interest:course_interests(name:interests(name)),stream:course_streams(name:streams(name))''')
+              .eq('id', event.courseId)
+              .single();
+          emit(CoursesGetByIdSuccessState(courses: courseData));
+        } else if (event is AddCourseInterestEvent) {
+          courseInterestTable.insert(event.courseInterestIds);
+          emit(CoursesSuccessState());
+        } else if (event is DeleteCourseInterestEvent) {
+          await courseInterestTable.delete().eq('id', event.courseInterestId);
+          emit(CoursesSuccessState());
+        } else if (event is AddCourseStreamEvent) {
+          courseStreamTable.insert(event.courseStreamIds);
+          emit(CoursesSuccessState());
+        } else if (event is DeleteCourseStreamEvent) {
+          await courseStreamTable.delete().eq('id', event.courseStreamId);
           emit(CoursesSuccessState());
         }
       } catch (e, s) {
