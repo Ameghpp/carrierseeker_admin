@@ -53,18 +53,18 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
         } else if (event is GetCoursesByIdEvent) {
           Map<String, dynamic> courseData = await table
               .select(
-                  '''*,interest:course_interests(name:interests(name)),stream:course_streams(name:streams(name))''')
+                  '''*,interest:course_interests(*,name:interests(name)),stream:course_streams(*,name:streams(name))''')
               .eq('id', event.courseId)
               .single();
           emit(CoursesGetByIdSuccessState(courses: courseData));
         } else if (event is AddCourseInterestEvent) {
-          courseInterestTable.insert(event.courseInterestIds);
+          await courseInterestTable.insert(event.courseInterestIds);
           emit(CoursesSuccessState());
         } else if (event is DeleteCourseInterestEvent) {
           await courseInterestTable.delete().eq('id', event.courseInterestId);
           emit(CoursesSuccessState());
         } else if (event is AddCourseStreamEvent) {
-          courseStreamTable.insert(event.courseStreamIds);
+          await courseStreamTable.insert(event.courseStreamIds);
           emit(CoursesSuccessState());
         } else if (event is DeleteCourseStreamEvent) {
           await courseStreamTable.delete().eq('id', event.courseStreamId);

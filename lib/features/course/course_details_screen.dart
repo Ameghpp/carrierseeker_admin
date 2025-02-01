@@ -1,14 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import '../../common_widget/custom_alert_dialog.dart';
 import '../../common_widget/custom_button.dart';
 import '../../common_widget/custom_chip.dart';
-import '../../common_widget/custom_dropdownmenu.dart';
 import '../../util/format_function.dart';
-import '../stream/stream_bloc/stream_bloc.dart';
+import 'add_edit_course_interest_dialog.dart';
+import 'add_edit_course_stream_dialog.dart';
 import 'courses_bloc/courses_bloc.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
@@ -72,125 +70,244 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   maxWidth: 1000,
                 ),
                 child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
+                    if (state is CoursesLoadingState)
+                      const LinearProgressIndicator(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Row(
+                        children: [
+                          IconButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(Icons.arrow_back))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    if (_courseData['photo_url'] != null)
-                      Image.network(
-                        _courseData['photo_url'],
-                        height: 400,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                        ],
                       ),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          formatValue(_courseData['course_name']),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                    Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_courseData['photo_url'] != null)
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: Image.network(
+                                _courseData['photo_url'],
+                                height: 400,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          formatValue(_courseData['course_description']),
-                          style:
-                              TextStyle(fontSize: 14, color: Colors.grey[700]),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              formatValue(_courseData['course_name']),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    color: Colors.black,
+                                  ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              formatValue(_courseData['course_description']),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey[700],
+                                  ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Interests",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.black,
+                    Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Interests",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          color: Colors.black,
+                                        ),
+                                  ),
                                 ),
-                          ),
-                        ),
-                        CustomButton(
-                          label: "Add Interest",
-                          iconData: Icons.add,
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Wrap(
-                      children: [
-                        CustomChip(
-                          onTap: () {},
-                          name: 'Data',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "Streams",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.black,
+                                CustomButton(
+                                  label: "Add Interest",
+                                  iconData: Icons.add,
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => BlocProvider.value(
+                                        value: _coursesBloc,
+                                        child: AddEditCourseInterstDialog(
+                                          courseId: widget.courseId,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                          ),
-                        ),
-                        CustomButton(
-                          label: "Add Stream",
-                          iconData: Icons.add,
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => BlocProvider.value(
-                                value: _coursesBloc,
-                                child: AddEditStreamDropDownDialog(
-                                  courseId: widget.courseId,
+                              ],
+                            ),
+                            if (_interest.isNotEmpty)
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            if (_interest.isNotEmpty)
+                              Wrap(
+                                children: List.generate(
+                                  _interest.length,
+                                  (index) => CustomChip(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => CustomAlertDialog(
+                                          title: 'Delete Stream?',
+                                          description:
+                                              'Are you sure you want to delete ${_interest[index]?['name']?['name']}',
+                                          primaryButton: 'Delete',
+                                          onPrimaryPressed: () {
+                                            _coursesBloc.add(
+                                              DeleteCourseInterestEvent(
+                                                courseInterestId:
+                                                    _interest[index]['id'],
+                                              ),
+                                            );
+                                            Navigator.pop(context);
+                                          },
+                                          secondaryButton: 'Cancel',
+                                        ),
+                                      );
+                                    },
+                                    name: formatValue(
+                                        _interest[index]?['name']?['name']),
+                                  ),
                                 ),
                               ),
-                            );
-                          },
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Wrap(
-                      children: List.generate(
-                        _stream.length,
-                        (index) => CustomChip(
-                          onTap: () {},
-                          name: formatValue(_stream[index]?['name']?['name']),
+                    Material(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Streams",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          color: Colors.black,
+                                        ),
+                                  ),
+                                ),
+                                CustomButton(
+                                  label: "Add Stream",
+                                  iconData: Icons.add,
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => BlocProvider.value(
+                                        value: _coursesBloc,
+                                        child: AddEditCourseStreamDialog(
+                                          courseId: widget.courseId,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            if (_stream.isNotEmpty)
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            if (_stream.isNotEmpty)
+                              Wrap(
+                                children: List.generate(
+                                  _stream.length,
+                                  (index) => CustomChip(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => CustomAlertDialog(
+                                          title: 'Delete Stream?',
+                                          description:
+                                              'Are you sure you want to delete ${_stream[index]?['name']?['name']}',
+                                          primaryButton: 'Delete',
+                                          onPrimaryPressed: () {
+                                            _coursesBloc.add(
+                                              DeleteCourseStreamEvent(
+                                                courseStreamId: _stream[index]
+                                                    ['id'],
+                                              ),
+                                            );
+                                            Navigator.pop(context);
+                                          },
+                                          secondaryButton: 'Cancel',
+                                        ),
+                                      );
+                                    },
+                                    name: formatValue(
+                                        _stream[index]?['name']?['name']),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),
@@ -198,139 +315,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class AddEditStreamDropDownDialog extends StatefulWidget {
-  final int courseId;
-  const AddEditStreamDropDownDialog({
-    super.key,
-    required this.courseId,
-  });
-
-  @override
-  State<AddEditStreamDropDownDialog> createState() =>
-      _AddEditStreamDropDownDialogState();
-}
-
-class _AddEditStreamDropDownDialogState
-    extends State<AddEditStreamDropDownDialog> {
-  final TextEditingController _refCenterController = TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final StreamBloc _streamBloc = StreamBloc();
-  Timer? _debounceStrem;
-  List _streams = [];
-  int? _selectedStream;
-  Map<String, dynamic> streamParams = {
-    'limit': 5,
-    'query': null,
-  };
-
-  @override
-  void initState() {
-    _refCenterController.addListener(() {
-      if (_debounceStrem?.isActive ?? false) _debounceStrem?.cancel();
-      _debounceStrem = Timer(const Duration(seconds: 1), () {
-        streamParams['query'] = _refCenterController.text.trim();
-        getStreams();
-      });
-    });
-    super.initState();
-  }
-
-  void getStreams() {
-    _streamBloc.add(GetAllStreamEvent(params: streamParams));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _streamBloc,
-      child: BlocConsumer<CoursesBloc, CoursesState>(
-        listener: (context, courseState) {
-          if (courseState is CoursesSuccessState) {
-            Navigator.pop(context);
-          }
-        },
-        builder: (context, state) {
-          return BlocConsumer<StreamBloc, StreamState>(
-            listener: (context, state) {
-              if (state is StreamFailureState) {
-                showDialog(
-                  context: context,
-                  builder: (context) => CustomAlertDialog(
-                    title: 'Failure',
-                    description: state.message,
-                    primaryButton: 'Retry',
-                    onPrimaryPressed: () {
-                      getStreams();
-                    },
-                  ),
-                );
-              } else if (state is StreamGetSuccessState) {
-                _streams = state.streams;
-                setState(() {});
-              } else if (state is StreamSuccessState) {
-                getStreams();
-              }
-            },
-            builder: (context, state) {
-              return CustomAlertDialog(
-                title: 'Add Stream',
-                isLoading: state is StreamLoadingState,
-                content: Form(
-                  key: _formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Stream Name',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: const Color(0xFF2D2D2D),
-                            ),
-                      ),
-                      const SizedBox(height: 5),
-                      CustomDropDownMenu(
-                        controller: _refCenterController,
-                        hintText: "Select center",
-                        onSelected: (selected) {
-                          _selectedStream = selected;
-                        },
-                        dropdownMenuEntries: List.generate(
-                          _streams.length,
-                          (index) => DropdownMenuEntry(
-                            value: _streams[index]['id'],
-                            label: _streams[index]['name'],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                primaryButton: 'Save',
-                onPrimaryPressed: () {
-                  if (_formKey.currentState!.validate() &&
-                      _selectedStream != null) {
-                    Map<String, dynamic> details = {
-                      'course_id': widget.courseId,
-                      'stream_id': _selectedStream,
-                    };
-
-                    BlocProvider.of<CoursesBloc>(context).add(
-                      AddCourseStreamEvent(
-                        courseStreamIds: details,
-                      ),
-                    );
-                  }
-                },
-              );
-            },
-          );
-        },
       ),
     );
   }
