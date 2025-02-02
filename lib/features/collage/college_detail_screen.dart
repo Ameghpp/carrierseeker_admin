@@ -137,6 +137,17 @@ class _CollageDetailsScreenState extends State<CollageDetailsScreen> {
                                         color: Colors.grey[700],
                                       ),
                                 ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  formatValue(_collageData['description']),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[700],
+                                      ),
+                                ),
                               ],
                             ),
                           ),

@@ -13,10 +13,12 @@ import '../university/universities_bloc/universities_bloc.dart';
 
 class AddEditCollageDialog extends StatefulWidget {
   final Map? collageDetails;
+  final int? universitieId;
 
   const AddEditCollageDialog({
     super.key,
     this.collageDetails,
+    this.universitieId,
   });
 
   @override
@@ -56,6 +58,9 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
       _descriptionController.text = widget.collageDetails!['description'];
       _pincodeController.text = widget.collageDetails!['pincode'];
       _selectedUniversitie = widget.collageDetails!['university_id'];
+    }
+    if (widget.universitieId != null) {
+      _selectedUniversitie = widget.universitieId;
     }
     super.initState();
   }
@@ -109,31 +114,37 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                     child: ListView(
                       shrinkWrap: true,
                       children: [
-                        Text(
-                          'Universitie Name',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: const Color(0xFF2D2D2D),
-                                  ),
-                        ),
-                        const SizedBox(height: 5),
-                        CustomDropDownMenu(
-                          initialSelection: _selectedUniversitie,
-                          controller: _universitieController,
-                          hintText: "Select Universitie",
-                          onSelected: (selected) {
-                            _selectedUniversitie = selected;
-                            Logger().w(_selectedUniversitie);
-                          },
-                          dropdownMenuEntries: List.generate(
-                            _universities.length,
-                            (index) => DropdownMenuEntry(
-                              value: _universities[index]['id'],
-                              label: _universities[index]['name'],
+                        if (widget.universitieId == null)
+                          Text(
+                            'Universitie Name',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: const Color(0xFF2D2D2D),
+                                ),
+                          ),
+                        if (widget.universitieId == null)
+                          const SizedBox(height: 5),
+                        if (widget.universitieId == null)
+                          CustomDropDownMenu(
+                            initialSelection: _selectedUniversitie,
+                            controller: _universitieController,
+                            hintText: "Select Universitie",
+                            onSelected: (selected) {
+                              _selectedUniversitie = selected;
+                              Logger().w(_selectedUniversitie);
+                            },
+                            dropdownMenuEntries: List.generate(
+                              _universities.length,
+                              (index) => DropdownMenuEntry(
+                                value: _universities[index]['id'],
+                                label: _universities[index]['name'],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 15),
+                        if (widget.universitieId == null)
+                          const SizedBox(height: 15),
                         Text(
                           'Cover Image',
                           style:

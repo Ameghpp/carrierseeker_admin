@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/collage/add_edit_collage_dialog.dart';
 import 'package:flutter_application_1/features/collage/collages_bloc/collages_bloc.dart';
+import 'package:flutter_application_1/features/collage/custom_collage_card.dart';
 import 'package:flutter_application_1/features/course/course_details_screen.dart';
 import 'package:flutter_application_1/features/university/add_edit_university_course.dart';
 import 'package:flutter_application_1/features/university/custom_university_course_card.dart';
@@ -7,8 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import '../../common_widget/custom_alert_dialog.dart';
 import '../../common_widget/custom_button.dart';
-import '../../common_widget/custom_chip.dart';
 import '../../util/format_function.dart';
+import '../collage/college_detail_screen.dart';
 import 'universities_bloc/universities_bloc.dart';
 
 class UniversitieDetailsScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
 
   @override
   void initState() {
+    getCollages();
     getUniversities();
     super.initState();
   }
@@ -229,15 +232,16 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                       label: "Add Collage",
                                       iconData: Icons.add,
                                       onPressed: () {
-                                        // showDialog(
-                                        //   context: context,
-                                        //   builder: (_) => BlocProvider.value(
-                                        //     value: _universitiesBloc,
-                                        //     child: AddEditUniversitieInterstDialog(
-                                        //       universitieId: widget.universitieId,
-                                        //     ),
-                                        //   ),
-                                        // );
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => BlocProvider.value(
+                                            value: _collagesBloc,
+                                            child: AddEditCollageDialog(
+                                              universitieId:
+                                                  widget.universitieId,
+                                            ),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ],
@@ -252,30 +256,61 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                     spacing: 20,
                                     children: List.generate(
                                       _collages.length,
-                                      (index) => CustomChip(
-                                        onTap: () {
-                                          // showDialog(
-                                          //   context: context,
-                                          //   builder: (context) => CustomAlertDialog(
-                                          //     title: 'Delete Course?',
-                                          //     description:
-                                          //         'Are you sure you want to delete ${_collages[index]?['name']?['name']}',
-                                          //     primaryButton: 'Delete',
-                                          //     onPrimaryPressed: () {
-                                          //       _universitiesBloc.add(
-                                          //         DeleteUniversitieInterestEvent(
-                                          //           universitieInterestId:
-                                          //               _collages[index]['id'],
-                                          //         ),
-                                          //       );
-                                          //       Navigator.pop(context);
-                                          //     },
-                                          //     secondaryButton: 'Cancel',
-                                          //   ),
-                                          // );
+                                      (index) => CustomCollageCard(
+                                        coverImageUrl: _collages[index]
+                                            ['cover_page'],
+                                        name: _collages[index]['name'],
+                                        address:
+                                            formatAddress(_collages[index]),
+                                        onEdit: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                BlocProvider.value(
+                                              value: _collagesBloc,
+                                              child: AddEditCollageDialog(
+                                                universitieId:
+                                                    widget.universitieId,
+                                                collageDetails:
+                                                    _collages[index],
+                                              ),
+                                            ),
+                                          );
                                         },
-                                        name: formatValue(
-                                            _collages[index]?['name']?['name']),
+                                        onDelete: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                CustomAlertDialog(
+                                              title: 'Delete Collage?',
+                                              description:
+                                                  'Deletion will fail if there are records under this collage',
+                                              primaryButton: 'Delete',
+                                              onPrimaryPressed: () {
+                                                _collagesBloc.add(
+                                                  DeleteCollageEvent(
+                                                    collageId: _collages[index]
+                                                        ['id'],
+                                                  ),
+                                                );
+                                                Navigator.pop(context);
+                                              },
+                                              secondaryButton: 'Cancel',
+                                            ),
+                                          );
+                                        },
+                                        onDetails: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CollageDetailsScreen(
+                                                collageId: _collages[index]
+                                                    ['id'],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
