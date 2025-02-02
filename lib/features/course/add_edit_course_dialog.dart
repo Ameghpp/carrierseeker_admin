@@ -83,7 +83,6 @@ class _AddEditCourseDialogState extends State<AddEditCourseDialog> {
                   labelText: 'Name',
                   controller: _nameController,
                   validator: alphabeticWithSpaceValidator,
-                  prefixIconData: Icons.shopping_bag,
                 ),
                 const SizedBox(
                   height: 15,

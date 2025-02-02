@@ -60,8 +60,8 @@ String formatAddress(Map<dynamic, dynamic>? details) {
   String line1 = '', line2 = '';
 
   // First line
-  if (details['address_line']?.toString().trim().isNotEmpty == true) {
-    line1 = details['address_line'].toString().trim();
+  if (details['address']?.toString().trim().isNotEmpty == true) {
+    line1 = details['address'].toString().trim();
     if (details['place']?.toString().trim().isNotEmpty == true) {
       line1 += ', ${details['place'].toString().trim()}';
     }

@@ -10,8 +10,9 @@ import 'add_edit_course_stream_dialog.dart';
 import 'courses_bloc/courses_bloc.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
+  final String? syllabus;
   final int courseId;
-  const CourseDetailsScreen({super.key, required this.courseId});
+  const CourseDetailsScreen({super.key, required this.courseId, this.syllabus});
 
   @override
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
@@ -146,6 +147,44 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         ],
                       ),
                     ),
+                    if (widget.syllabus != null)
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    if (widget.syllabus != null)
+                      Material(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Syllabus",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color: Colors.black,
+                                    ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                widget.syllabus!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: Colors.black,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     const SizedBox(
                       height: 20,
                     ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomDropDownMenu extends StatelessWidget {
+class CustomDropDownMenu<T> extends StatelessWidget {
   final TextEditingController? controller;
-  final Function(dynamic selected) onSelected;
+  final T? initialSelection;
+  final Function(T? selected) onSelected;
   final String hintText;
   final double width;
-  final List<DropdownMenuEntry<dynamic>> dropdownMenuEntries;
+  final List<DropdownMenuEntry<T>> dropdownMenuEntries;
   const CustomDropDownMenu({
     super.key,
     required this.hintText,
@@ -13,11 +14,13 @@ class CustomDropDownMenu extends StatelessWidget {
     this.width = 360,
     required this.onSelected,
     this.controller,
+    this.initialSelection,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      initialSelection: initialSelection,
       onSelected: onSelected,
       controller: controller,
       width: width,

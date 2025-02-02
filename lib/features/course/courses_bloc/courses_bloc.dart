@@ -44,6 +44,15 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
 
           emit(CoursesSuccessState());
         } else if (event is EditCourseEvent) {
+          if (event.courseDetails['image'] != null) {
+            event.courseDetails['photo_url'] = await uploadFile(
+              'course/photo',
+              event.courseDetails['image'],
+              event.courseDetails['image_name'],
+            );
+            event.courseDetails.remove('image');
+            event.courseDetails.remove('image_name');
+          }
           await table.update(event.courseDetails).eq('id', event.courseId);
 
           emit(CoursesSuccessState());

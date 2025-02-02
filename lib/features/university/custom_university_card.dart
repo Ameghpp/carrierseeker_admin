@@ -93,7 +93,7 @@ class CustomUniversityCard extends StatelessWidget {
                           address,
                           style:
                               TextStyle(fontSize: 14, color: Colors.grey[700]),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                         ),
                       ],
                     ),
