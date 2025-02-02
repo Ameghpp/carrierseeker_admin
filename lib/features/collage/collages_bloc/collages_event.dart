@@ -38,10 +38,20 @@ class DeleteCollageEvent extends CollagesEvent {
 }
 
 class AddCollageCourseEvent extends CollagesEvent {
-  final Map<String, dynamic> collageCourseIds;
+  final Map<String, dynamic> collageCourseDetails;
 
   AddCollageCourseEvent({
-    required this.collageCourseIds,
+    required this.collageCourseDetails,
+  });
+}
+
+class EditCollageCourseEvent extends CollagesEvent {
+  final Map<String, dynamic> collageCourseDetails;
+  final int collageCourseId;
+
+  EditCollageCourseEvent({
+    required this.collageCourseId,
+    required this.collageCourseDetails,
   });
 }
 

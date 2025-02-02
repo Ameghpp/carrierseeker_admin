@@ -42,6 +42,7 @@ class _AddEditUniversityCourseDialogState
     getCourses();
     if (widget.universitieCourseDetails != null &&
         widget.universitieCourseDetails!['courses'] != null) {
+      _selectedCourse = widget.universitieCourseDetails!['courses']?['id'];
       _courseController.text =
           widget.universitieCourseDetails!['courses']?['course_name'];
       _syllubusController.text = widget.universitieCourseDetails!['syllabus'];
@@ -105,6 +106,7 @@ class _AddEditUniversityCourseDialogState
                       ),
                       const SizedBox(height: 5),
                       CustomDropDownMenu(
+                        initialSelection: _selectedCourse,
                         controller: _courseController,
                         hintText: "Select Course",
                         onSelected: (selected) {

@@ -12,7 +12,9 @@ import 'courses_bloc/courses_bloc.dart';
 class CourseDetailsScreen extends StatefulWidget {
   final String? syllabus;
   final int courseId;
-  const CourseDetailsScreen({super.key, required this.courseId, this.syllabus});
+  final Map? feeRange;
+  const CourseDetailsScreen(
+      {super.key, required this.courseId, this.syllabus, this.feeRange});
 
   @override
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
@@ -112,37 +114,48 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          const SizedBox(
-                            height: 20,
-                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              formatValue(_courseData['course_name']),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    color: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  formatValue(_courseData['course_name']),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        color: Colors.black,
+                                      ),
+                                ),
+                                if (widget.feeRange != null)
+                                  const SizedBox(height: 4),
+                                if (widget.feeRange != null)
+                                  Text(
+                                    '₹${widget.feeRange!['fee_range_start']} - ₹${widget.feeRange!['fee_range_end']}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.green,
+                                        ),
                                   ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  formatValue(
+                                      _courseData['course_description']),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey[700],
+                                      ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              formatValue(_courseData['course_description']),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey[700],
-                                  ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
                           ),
                         ],
                       ),
@@ -232,6 +245,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                               ),
                             if (_interest.isNotEmpty)
                               Wrap(
+                                runSpacing: 20,
+                                spacing: 20,
                                 children: List.generate(
                                   _interest.length,
                                   (index) => CustomChip(
@@ -312,6 +327,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                               ),
                             if (_stream.isNotEmpty)
                               Wrap(
+                                runSpacing: 20,
+                                spacing: 20,
                                 children: List.generate(
                                   _stream.length,
                                   (index) => CustomChip(

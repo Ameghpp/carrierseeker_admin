@@ -2,34 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../common_widget/custom_button.dart';
 
-class Collages extends StatelessWidget {
-  const Collages({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomCollageCard(
-          coverImageUrl:
-              'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
-          name: "Collage",
-          address: "address",
-        ),
-      ],
-    );
-  }
-}
-
 class CustomCollageCard extends StatelessWidget {
   final String coverImageUrl;
   final String name;
   final String address;
+  final Function() onEdit, onDelete, onDetails;
 
   const CustomCollageCard({
     super.key,
     required this.coverImageUrl,
     required this.name,
     required this.address,
+    required this.onEdit,
+    required this.onDelete,
+    required this.onDetails,
   });
 
   @override
@@ -45,15 +31,39 @@ class CustomCollageCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(8)),
-              child: Image.network(
-                coverImageUrl,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(8)),
+                  child: Image.network(
+                    coverImageUrl,
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: onEdit,
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.orange,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: onDelete,
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -75,13 +85,13 @@ class CustomCollageCard extends StatelessWidget {
                           address,
                           style:
                               TextStyle(fontSize: 14, color: Colors.grey[700]),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                         ),
                       ],
                     ),
                   ),
                   CustomButton(
-                    onPressed: () {},
+                    onPressed: onDetails,
                     label: "Details",
                   ),
                 ],

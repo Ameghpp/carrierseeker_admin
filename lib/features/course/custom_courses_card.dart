@@ -5,13 +5,13 @@ import '../../common_widget/custom_button.dart';
 class CustomCourseCard extends StatelessWidget {
   final String image;
   final String name;
-  final String description;
+  // final String description;
   final Function() onEdit, onDelete, onDetail;
 
   const CustomCourseCard({
     super.key,
     required this.name,
-    required this.description,
+    // required this.description,
     required this.image,
     required this.onEdit,
     required this.onDelete,

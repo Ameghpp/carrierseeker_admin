@@ -1,49 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common_widget/custom_search.dart';
-import 'package:flutter_application_1/features/course/add_edit_course_dialog.dart';
-import 'package:flutter_application_1/features/course/course_details_screen.dart';
-import 'package:flutter_application_1/features/course/courses_bloc/courses_bloc.dart';
+import 'package:flutter_application_1/features/collage/add_edit_collage_dialog.dart';
+import 'package:flutter_application_1/features/collage/college_detail_screen.dart';
+import 'package:flutter_application_1/features/collage/custom_collage_card.dart';
+import 'package:flutter_application_1/util/format_function.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import '../../common_widget/custom_alert_dialog.dart';
 import '../../common_widget/custom_button.dart';
 import '../../util/check_login.dart';
-import 'custom_courses_card.dart';
+import 'collages_bloc/collages_bloc.dart';
 
-class Courses extends StatefulWidget {
-  const Courses({super.key});
+class Collages extends StatefulWidget {
+  const Collages({super.key});
 
   @override
-  State<Courses> createState() => _CoursesState();
+  State<Collages> createState() => _CollagesState();
 }
 
-class _CoursesState extends State<Courses> {
-  final CoursesBloc _coursesBloc = CoursesBloc();
+class _CollagesState extends State<Collages> {
+  final CollagesBloc _collagesBloc = CollagesBloc();
 
   Map<String, dynamic> params = {
     'query': null,
   };
 
-  List<Map> _courses = [];
+  List<Map> _collages = [];
 
   @override
   void initState() {
     checkLogin(context);
-    getCourses();
+    getCollages();
     super.initState();
   }
 
-  void getCourses() {
-    _coursesBloc.add(GetAllCoursesEvent(params: params));
+  void getCollages() {
+    _collagesBloc.add(GetAllCollagesEvent(params: params));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: _coursesBloc,
-      child: BlocConsumer<CoursesBloc, CoursesState>(
+      value: _collagesBloc,
+      child: BlocConsumer<CollagesBloc, CollagesState>(
         listener: (context, state) {
-          if (state is CoursesFailureState) {
+          if (state is CollagesFailureState) {
             showDialog(
               context: context,
               builder: (context) => CustomAlertDialog(
@@ -51,17 +52,17 @@ class _CoursesState extends State<Courses> {
                 description: state.message,
                 primaryButton: 'Try Again',
                 onPrimaryPressed: () {
-                  getCourses();
+                  getCollages();
                   Navigator.pop(context);
                 },
               ),
             );
-          } else if (state is CoursesGetSuccessState) {
-            _courses = state.courses;
-            Logger().w(_courses);
+          } else if (state is CollagesGetSuccessState) {
+            _collages = state.collages;
+            Logger().w(_collages);
             setState(() {});
-          } else if (state is CoursesSuccessState) {
-            getCourses();
+          } else if (state is CollagesSuccessState) {
+            getCollages();
           }
         },
         builder: (context, state) {
@@ -77,7 +78,7 @@ class _CoursesState extends State<Courses> {
                     children: [
                       Expanded(
                         child: Text(
-                          "Courses",
+                          "Collages",
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.black,
@@ -89,7 +90,7 @@ class _CoursesState extends State<Courses> {
                         child: CustomSearch(
                           onSearch: (search) {
                             params['query'] = search;
-                            getCourses();
+                            getCollages();
                           },
                         ),
                       ),
@@ -97,14 +98,14 @@ class _CoursesState extends State<Courses> {
                         width: 10,
                       ),
                       CustomButton(
-                        label: "Add Course",
+                        label: "Add Collage",
                         iconData: Icons.add,
                         onPressed: () {
                           showDialog(
                             context: context,
                             builder: (context) => BlocProvider.value(
-                              value: _coursesBloc,
-                              child: const AddEditCourseDialog(),
+                              value: _collagesBloc,
+                              child: const AddEditCollageDialog(),
                             ),
                           );
                         },
@@ -114,28 +115,28 @@ class _CoursesState extends State<Courses> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (state is CoursesLoadingState)
+                  if (state is CollagesLoadingState)
                     const Center(child: CircularProgressIndicator()),
-                  if (_courses.isEmpty && state is! CoursesLoadingState)
-                    const Center(child: Text("No Course Found")),
+                  if (_collages.isEmpty && state is! CollagesLoadingState)
+                    const Center(child: Text("No Collage Found")),
                   Wrap(
                     spacing: 20,
                     runSpacing: 20,
                     alignment: WrapAlignment.start,
                     runAlignment: WrapAlignment.start,
                     children: List.generate(
-                      _courses.length,
-                      (index) => CustomCourseCard(
-                        image: _courses[index]['photo_url'],
-                        name: _courses[index]['course_name'],
-                        // description: _courses[index]["course_description"],
+                      _collages.length,
+                      (index) => CustomCollageCard(
+                        coverImageUrl: _collages[index]['cover_page'],
+                        name: _collages[index]['name'],
+                        address: formatAddress(_collages[index]),
                         onEdit: () {
                           showDialog(
                             context: context,
                             builder: (context) => BlocProvider.value(
-                              value: _coursesBloc,
-                              child: AddEditCourseDialog(
-                                courseDetails: _courses[index],
+                              value: _collagesBloc,
+                              child: AddEditCollageDialog(
+                                collageDetails: _collages[index],
                               ),
                             ),
                           );
@@ -144,14 +145,14 @@ class _CoursesState extends State<Courses> {
                           showDialog(
                             context: context,
                             builder: (context) => CustomAlertDialog(
-                              title: 'Delete Course?',
+                              title: 'Delete Collage?',
                               description:
-                                  'Deletion will fail if there are records under this course',
+                                  'Deletion will fail if there are records under this collage',
                               primaryButton: 'Delete',
                               onPrimaryPressed: () {
-                                _coursesBloc.add(
-                                  DeleteCourseEvent(
-                                    courseId: _courses[index]['id'],
+                                _collagesBloc.add(
+                                  DeleteCollageEvent(
+                                    collageId: _collages[index]['id'],
                                   ),
                                 );
                                 Navigator.pop(context);
@@ -160,12 +161,12 @@ class _CoursesState extends State<Courses> {
                             ),
                           );
                         },
-                        onDetail: () {
+                        onDetails: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CourseDetailsScreen(
-                                courseId: _courses[index]['id'],
+                              builder: (context) => CollageDetailsScreen(
+                                collageId: _collages[index]['id'],
                               ),
                             ),
                           );

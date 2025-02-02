@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/features/collage/collages.dart';
+import 'package:flutter_application_1/features/collage/colleges.dart';
 import 'package:flutter_application_1/features/course/courses.dart';
 import 'package:flutter_application_1/features/dashboard/dashboard.dart';
 import 'package:flutter_application_1/features/interests/interests.dart';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 1,
+      initialIndex: 2,
     );
     _tabController.addListener(() {
       setState(() {});

@@ -15,11 +15,11 @@ class CollagesBloc extends Bloc<CollagesEvent, CollagesState> {
       try {
         emit(CollagesLoadingState());
         SupabaseQueryBuilder table = Supabase.instance.client.from('collages');
-        SupabaseQueryBuilder collageInterestTable =
-            Supabase.instance.client.from('university_courses');
+        SupabaseQueryBuilder collageCourseTable =
+            Supabase.instance.client.from('collage_course');
         if (event is GetAllCollagesEvent) {
           PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
-              table.select('*');
+              table.select('*,university:universities(id,name)');
 
           if (event.params['query'] != null) {
             query = query.ilike('name', '%${event.params['query']}%');
@@ -33,7 +33,7 @@ class CollagesBloc extends Bloc<CollagesEvent, CollagesState> {
 
           emit(CollagesGetSuccessState(collages: collages));
         } else if (event is AddCollageEvent) {
-          event.collageDetails['cover_image'] = await uploadFile(
+          event.collageDetails['cover_page'] = await uploadFile(
             'collages/cover_image',
             event.collageDetails['cover_image_file'],
             event.collageDetails['cover_image_name'],
@@ -46,7 +46,7 @@ class CollagesBloc extends Bloc<CollagesEvent, CollagesState> {
           emit(CollagesSuccessState());
         } else if (event is EditCollageEvent) {
           if (event.collageDetails['cover_image_file'] != null) {
-            event.collageDetails['cover_image'] = await uploadFile(
+            event.collageDetails['cover_page'] = await uploadFile(
               'collage/cover_image',
               event.collageDetails['cover_image_file'],
               event.collageDetails['cover_image_name'],
@@ -63,15 +63,27 @@ class CollagesBloc extends Bloc<CollagesEvent, CollagesState> {
           emit(CollagesSuccessState());
         } else if (event is GetCollagesByIdEvent) {
           Map<String, dynamic> collageData = await table
-              .select('''*,courses:university_courses(*)''')
+              .select(
+                  '''*,courses:collage_course(*,courses:university_courses(*,courses:courses(*)))''')
               .eq('id', event.collageId)
               .single();
+
+          collageData['university_courses'] = await Supabase.instance.client
+              .from('university_courses')
+              .select('*,courses:courses(*)')
+              .eq('university_id', collageData['university_id']);
+
           emit(CollagesGetByIdSuccessState(collage: collageData));
         } else if (event is AddCollageCourseEvent) {
-          await collageInterestTable.insert(event.collageCourseIds);
+          await collageCourseTable.insert(event.collageCourseDetails);
+          emit(CollagesSuccessState());
+        } else if (event is EditCollageCourseEvent) {
+          await collageCourseTable
+              .update(event.collageCourseDetails)
+              .eq('id', event.collageCourseId);
           emit(CollagesSuccessState());
         } else if (event is DeleteCollageCourseEvent) {
-          await collageInterestTable.delete().eq('id', event.collageCourseId);
+          await collageCourseTable.delete().eq('id', event.collageCourseId);
           emit(CollagesSuccessState());
         }
       } catch (e, s) {

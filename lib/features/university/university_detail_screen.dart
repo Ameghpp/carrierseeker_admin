@@ -248,6 +248,8 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                   ),
                                 if (_collages.isNotEmpty)
                                   Wrap(
+                                    runSpacing: 20,
+                                    spacing: 20,
                                     children: List.generate(
                                       _collages.length,
                                       (index) => CustomChip(
@@ -330,6 +332,8 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                   ),
                                 if (_course.isNotEmpty)
                                   Wrap(
+                                    runSpacing: 20,
+                                    spacing: 20,
                                     children: List.generate(
                                       _course.length,
                                       (index) => CustomUniversityCourseCard(
