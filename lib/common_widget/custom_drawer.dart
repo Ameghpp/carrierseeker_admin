@@ -47,7 +47,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     const SizedBox(height: 10),
                     DrawerButton(
                       label: 'University',
-                      iconData: Icons.list_alt_rounded,
+                      iconData: Icons.school,
                       onPressed: () {
                         changeIndex(1);
                       },
@@ -56,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     const SizedBox(height: 10),
                     DrawerButton(
                       label: 'Collage',
-                      iconData: Icons.percent,
+                      iconData: Icons.location_city,
                       onPressed: () {
                         changeIndex(2);
                       },
@@ -65,7 +65,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     const SizedBox(height: 10),
                     DrawerButton(
                       label: 'Course',
-                      iconData: Icons.location_city,
+                      iconData: Icons.psychology,
                       onPressed: () {
                         changeIndex(3);
                       },
@@ -74,7 +74,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     const SizedBox(height: 10),
                     DrawerButton(
                       label: 'Streams',
-                      iconData: Icons.location_city,
+                      iconData: Icons.hub,
                       onPressed: () {
                         changeIndex(4);
                       },
@@ -83,7 +83,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     const SizedBox(height: 10),
                     DrawerButton(
                       label: 'Interests',
-                      iconData: Icons.location_city,
+                      iconData: Icons.emoji_emotions,
                       onPressed: () {
                         changeIndex(5);
                       },

@@ -67,7 +67,7 @@ class _CollageDetailsScreenState extends State<CollageDetailsScreen> {
             return Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: 1000,
+                  maxWidth: 900,
                 ),
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -58,13 +58,15 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          Dashboard(),
-          Universities(),
-          Collages(),
-          Courses(),
-          Streams(),
-          Interests(),
+        children: [
+          Dashboard(
+            tabcontroller: _tabController,
+          ),
+          const Universities(),
+          const Collages(),
+          const Courses(),
+          const Streams(),
+          const Interests(),
         ],
       ),
     );

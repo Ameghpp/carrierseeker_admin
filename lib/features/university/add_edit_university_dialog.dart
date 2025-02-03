@@ -197,7 +197,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   CustomTextFormField(
                     labelText: 'Enter Address',
                     controller: _addressController,
-                    validator: alphabeticWithSpaceValidator,
+                    validator: validateAddress,
                     prefixIconData: Icons.shopping_bag,
                   ),
                   const SizedBox(

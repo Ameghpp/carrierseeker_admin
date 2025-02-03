@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common_widget/custom_button.dart';
 import 'package:flutter_application_1/features/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common_widget/custom_alert_dialog.dart';
@@ -66,83 +68,90 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Image.network(
-                  'https://plus.unsplash.com/premium_photo-1681487732859-c2a780022063?q=80&w=2018&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                child: Image.asset(
+                  'assets/images/university.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
               Expanded(
-                child: Center(
-                  child: SizedBox(
-                      width: 350,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "login",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              controller: _emailController,
-                              decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.email_rounded),
-                                  border: OutlineInputBorder(),
-                                  hintText: 'email'),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              controller: _passwordController,
-                              obscureText: _isObscure,
-                              decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.lock_rounded),
-                                border: const OutlineInputBorder(),
-                                hintText: 'password',
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    _isObscure = !_isObscure;
-                                    setState(() {});
-                                  },
-                                  icon: Icon(
-                                    _isObscure
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                child: Material(
+                  color: Colors.white,
+                  child: Center(
+                    child: SizedBox(
+                        width: 350,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Carrier Seeker",
+                                style: GoogleFonts.domine(fontSize: 40),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Login",
+                                style: GoogleFonts.domine(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              TextField(
+                                controller: _emailController,
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.email_rounded),
+                                    border: OutlineInputBorder(),
+                                    hintText: 'email'),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: _passwordController,
+                                obscureText: _isObscure,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.lock_rounded),
+                                  border: const OutlineInputBorder(),
+                                  hintText: 'password',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      _isObscure = !_isObscure;
+                                      setState(() {});
+                                    },
+                                    icon: Icon(
+                                      _isObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            //TODO:Loading
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 42, 146, 230),
-                                foregroundColor:
-                                    const Color.fromARGB(255, 13, 13, 14),
+                              const SizedBox(
+                                height: 25,
                               ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  BlocProvider.of<LoginBloc>(context).add(
-                                    LoginEvent(
-                                      email: _emailController.text.trim(),
-                                      password: _passwordController.text.trim(),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Text('LOGIN'),
-                            ),
-                          ],
-                        ),
-                      )),
+                              //TODO:Loading
+                              CustomButton(
+                                isLoading: state is LoginLoadingState,
+                                inverse: true,
+                                label: 'Login',
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                      LoginEvent(
+                                        email: _emailController.text.trim(),
+                                        password:
+                                            _passwordController.text.trim(),
+                                      ),
+                                    );
+                                  }
+                                },
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
                 ),
               ),
             ],

@@ -23,6 +23,7 @@ class CustomUniversityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),

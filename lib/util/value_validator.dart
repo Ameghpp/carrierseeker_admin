@@ -298,3 +298,16 @@ String? longitudeValidator(String? value) {
 
   return null; // No error
 }
+
+String? validateAddress(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "Address cannot be empty";
+  }
+  if (value.length < 5) {
+    return "Address is too short";
+  }
+  if (!RegExp(r'^[a-zA-Z0-9\s,.-]+$').hasMatch(value)) {
+    return "Invalid characters in address";
+  }
+  return null; // Valid address
+}
