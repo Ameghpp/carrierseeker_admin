@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common_widget/custom_button.dart';
 import 'package:flutter_application_1/features/home_screen.dart';
+import 'package:flutter_application_1/util/value_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -42,42 +43,42 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocProvider(
-      create: (context) => LoginBloc(),
-      child: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, state) {
-          if (state is LoginSuccessState) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (route) => false,
-            );
-          } else if (state is LoginFailureState) {
-            showDialog(
-              context: context,
-              builder: (context) => CustomAlertDialog(
-                title: 'Failed',
-                description: state.message,
-                primaryButton: 'Ok',
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Image.asset(
-                  'assets/images/university.jpg',
-                  fit: BoxFit.cover,
+      body: BlocProvider(
+        create: (context) => LoginBloc(),
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccessState) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                (route) => false,
+              );
+            } else if (state is LoginFailureState) {
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  title: 'Failed',
+                  description: state.message,
+                  primaryButton: 'Ok',
                 ),
-              ),
-              Expanded(
-                child: Material(
-                  color: Colors.white,
-                  child: Center(
-                    child: SizedBox(
+              );
+            }
+          },
+          builder: (context, state) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    'assets/images/university.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    color: Colors.white,
+                    child: Center(
+                      child: SizedBox(
                         width: 350,
                         child: Form(
                           key: _formKey,
@@ -98,12 +99,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              TextField(
+                              TextFormField(
                                 controller: _emailController,
+                                validator: emailValidator,
                                 decoration: const InputDecoration(
-                                    prefixIcon: Icon(Icons.email_rounded),
-                                    border: OutlineInputBorder(),
-                                    hintText: 'email'),
+                                  prefixIcon: Icon(Icons.email_rounded),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'email',
+                                ),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -131,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              //TODO:Loading
                               CustomButton(
                                 isLoading: state is LoginLoadingState,
                                 inverse: true,
@@ -150,14 +152,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             ],
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
-    ));
+    );
   }
 }
