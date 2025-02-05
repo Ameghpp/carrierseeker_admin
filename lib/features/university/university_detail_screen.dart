@@ -219,7 +219,7 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Collages",
+                                        "Colleges",
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge!
@@ -229,7 +229,7 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                       ),
                                     ),
                                     CustomButton(
-                                      label: "Add Collage",
+                                      label: "Add College",
                                       iconData: Icons.add,
                                       onPressed: () {
                                         showDialog(
@@ -282,7 +282,7 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                             context: context,
                                             builder: (context) =>
                                                 CustomAlertDialog(
-                                              title: 'Delete Collage?',
+                                              title: 'Delete College?',
                                               description:
                                                   'Deletion will fail if there are records under this collage',
                                               primaryButton: 'Delete',

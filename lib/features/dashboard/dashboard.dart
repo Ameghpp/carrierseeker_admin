@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
               ),
               DashboardItem(
                 iconData: Icons.apartment,
-                label: "Total Collage",
+                label: "Total College",
                 value: formatInteger(_dashboard['colleges_count']),
                 ontap: () {
                   widget.tabcontroller.animateTo(2);

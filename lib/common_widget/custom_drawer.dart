@@ -58,7 +58,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                     ),
                     const SizedBox(height: 10),
                     DrawerButton(
-                      label: 'Collage',
+                      label: 'College',
                       iconData: Icons.location_city,
                       onPressed: () {
                         changeIndex(2);

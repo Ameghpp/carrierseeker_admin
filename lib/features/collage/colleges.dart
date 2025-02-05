@@ -78,7 +78,7 @@ class _CollagesState extends State<Collages> {
                     children: [
                       Expanded(
                         child: Text(
-                          "Collages",
+                          "Colleges",
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.black,
@@ -98,7 +98,7 @@ class _CollagesState extends State<Collages> {
                         width: 10,
                       ),
                       CustomButton(
-                        label: "Add Collage",
+                        label: "Add College",
                         iconData: Icons.add,
                         onPressed: () {
                           showDialog(
@@ -118,7 +118,7 @@ class _CollagesState extends State<Collages> {
                   if (state is CollagesLoadingState)
                     const Center(child: CircularProgressIndicator()),
                   if (_collages.isEmpty && state is! CollagesLoadingState)
-                    const Center(child: Text("No Collage Found")),
+                    const Center(child: Text("No College Found")),
                   Wrap(
                     spacing: 20,
                     runSpacing: 20,
@@ -145,7 +145,7 @@ class _CollagesState extends State<Collages> {
                           showDialog(
                             context: context,
                             builder: (context) => CustomAlertDialog(
-                              title: 'Delete Collage?',
+                              title: 'Delete College?',
                               description:
                                   'Deletion will fail if there are records under this collage',
                               primaryButton: 'Delete',
