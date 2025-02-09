@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common_widget/custom_alert_dialog.dart';
+import '../../common_widget/forgot_password.dart';
+import '../../common_widget/text_link.dart';
 import 'login_bloc/login_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -129,6 +131,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                           : Icons.visibility_off,
                                     ),
                                   ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Center(
+                                child: TextLink(
+                                  text: 'Forgot Password?',
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                          const ForgotPasswordDialog(),
+                                    );
+                                  },
                                 ),
                               ),
                               const SizedBox(
