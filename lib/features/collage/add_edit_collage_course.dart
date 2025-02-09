@@ -78,6 +78,7 @@ class _AddEditCollageCourseDialogState
                 ),
                 const SizedBox(height: 5),
                 CustomDropDownMenu(
+                  isLoading: state is CollagesLoadingState,
                   initialSelection: _selectedCourse,
                   controller: _courseController,
                   hintText: "Select Course",
@@ -102,6 +103,7 @@ class _AddEditCollageCourseDialogState
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is CollagesLoadingState,
                   labelText: "Enter Fee Start",
                   controller: _feeStartController,
                   validator: numericValidator,
@@ -115,6 +117,7 @@ class _AddEditCollageCourseDialogState
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is CollagesLoadingState,
                   labelText: "Enter Fee End",
                   controller: _feeEndController,
                   validator: numericValidator,

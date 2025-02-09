@@ -102,6 +102,8 @@ class _AddEditCourseStreamDialogState extends State<AddEditCourseStreamDialog> {
                       ),
                       const SizedBox(height: 5),
                       CustomDropDownMenu(
+                        isLoading: state is StreamLoadingState ||
+                            courseState is CoursesLoadingState,
                         controller: _refCenterController,
                         hintText: "Select Stream",
                         onSelected: (selected) {

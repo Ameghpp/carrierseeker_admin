@@ -106,6 +106,8 @@ class _AddEditUniversityCourseDialogState
                       ),
                       const SizedBox(height: 5),
                       CustomDropDownMenu(
+                        isLoading: state is CoursesLoadingState ||
+                            universitieState is UniversitiesLoadingState,
                         initialSelection: _selectedCourse,
                         controller: _courseController,
                         hintText: "Select Course",
@@ -130,6 +132,8 @@ class _AddEditUniversityCourseDialogState
                       ),
                       const SizedBox(height: 5),
                       CustomTextFormField(
+                        isLoading: state is CoursesLoadingState ||
+                            universitieState is UniversitiesLoadingState,
                         minLines: 3,
                         maxLines: 3,
                         labelText: "Enter Syllabus",

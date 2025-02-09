@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common_widget/custom_text_formfield.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../features/reset_password/reset_password_screen.dart';
@@ -31,13 +32,11 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         key: _formKey,
         child: Column(
           children: [
-            TextFormField(
+            CustomTextFormField(
               controller: _emailController,
               validator: emailValidator,
-              enabled: !_isLoading,
-              decoration: const InputDecoration(
-                hintText: 'Email',
-              ),
+              isLoading: _isLoading,
+              labelText: 'Email',
             ),
           ],
         ),

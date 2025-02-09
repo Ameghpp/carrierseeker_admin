@@ -45,6 +45,7 @@ class _AddEditInterestDialogState extends State<AddEditInterestDialog> {
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is InterestsLoadingState,
                   labelText: 'Name',
                   controller: _nameController,
                   validator: alphabeticWithSpaceValidator,

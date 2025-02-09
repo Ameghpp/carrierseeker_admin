@@ -101,6 +101,8 @@ class _AddEditCourseInterstDialogState
                       ),
                       const SizedBox(height: 5),
                       CustomDropDownMenu(
+                        isLoading: state is InterestsLoadingState ||
+                            courseState is CoursesLoadingState,
                         controller: _refCenterController,
                         hintText: "Select Interest",
                         onSelected: (selected) {

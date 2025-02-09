@@ -115,6 +115,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter Name',
                     controller: _nameController,
                     validator: alphabeticWithSpaceValidator,
@@ -131,6 +132,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter State',
                     controller: _stateController,
                     validator: alphabeticWithSpaceValidator,
@@ -147,6 +149,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter District',
                     controller: _districtController,
                     validator: alphabeticWithSpaceValidator,
@@ -163,6 +166,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter Place',
                     controller: _placeController,
                     validator: alphabeticWithSpaceValidator,
@@ -179,6 +183,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter Pincode',
                     controller: _pincodeController,
                     validator: pincodeValidator,
@@ -195,6 +200,7 @@ class _AddEditUniversitieDialogState extends State<AddEditUniversitieDialog> {
                   ),
                   const SizedBox(height: 5),
                   CustomTextFormField(
+                    isLoading: state is UniversitiesLoadingState,
                     labelText: 'Enter Address',
                     controller: _addressController,
                     validator: validateAddress,

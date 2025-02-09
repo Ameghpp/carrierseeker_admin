@@ -128,6 +128,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                           const SizedBox(height: 5),
                         if (widget.universitieId == null)
                           CustomDropDownMenu(
+                            isLoading: state is UniversitiesLoadingState ||
+                                collageState is CollagesLoadingState,
                             initialSelection: _selectedUniversitie,
                             controller: _universitieController,
                             hintText: "Select Universitie",
@@ -175,6 +177,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           labelText: 'Enter Name',
                           controller: _nameController,
                           validator: alphabeticWithSpaceValidator,
@@ -191,6 +195,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           labelText: 'Enter State',
                           controller: _stateController,
                           validator: alphabeticWithSpaceValidator,
@@ -207,6 +213,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           labelText: 'Enter District',
                           controller: _districtController,
                           validator: alphabeticWithSpaceValidator,
@@ -223,6 +231,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           labelText: 'Enter Place',
                           controller: _placeController,
                           validator: alphabeticWithSpaceValidator,
@@ -239,6 +249,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           labelText: 'Enter Pincode',
                           controller: _pincodeController,
                           validator: pincodeValidator,
@@ -255,6 +267,8 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                         ),
                         const SizedBox(height: 5),
                         CustomTextFormField(
+                          isLoading: state is UniversitiesLoadingState ||
+                              collageState is CollagesLoadingState,
                           minLines: 3,
                           maxLines: 3,
                           labelText: 'Enter Description',

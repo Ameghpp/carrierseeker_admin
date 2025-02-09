@@ -45,6 +45,7 @@ class _AddEditStreamDialogState extends State<AddEditStreamDialog> {
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is StreamLoadingState,
                   labelText: 'Name',
                   controller: _nameController,
                   validator: alphabeticWithSpaceValidator,

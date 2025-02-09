@@ -80,6 +80,7 @@ class _AddEditCourseDialogState extends State<AddEditCourseDialog> {
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is CoursesLoadingState,
                   labelText: 'Name',
                   controller: _nameController,
                   validator: alphabeticWithSpaceValidator,
@@ -95,6 +96,7 @@ class _AddEditCourseDialogState extends State<AddEditCourseDialog> {
                 ),
                 const SizedBox(height: 5),
                 CustomTextFormField(
+                  isLoading: state is CoursesLoadingState,
                   minLines: 3,
                   maxLines: 3,
                   labelText: 'Description',

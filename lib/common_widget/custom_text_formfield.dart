@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final bool isLoading;
   final String labelText;
   final String? title;
   final double width;
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.contentPadding,
+    required this.isLoading,
   });
 
   @override
@@ -38,6 +40,7 @@ class CustomTextFormField extends StatelessWidget {
             ),
           if (title != null) const SizedBox(height: 5),
           TextFormField(
+            enabled: !isLoading,
             controller: controller,
             validator: validator,
             minLines: minLines,
