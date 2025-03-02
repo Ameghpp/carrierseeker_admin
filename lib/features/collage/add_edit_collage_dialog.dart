@@ -273,7 +273,7 @@ class _AddEditCollageDialogState extends State<AddEditCollageDialog> {
                           maxLines: 3,
                           labelText: 'Enter Description',
                           controller: _descriptionController,
-                          validator: alphabeticWithSpaceValidator,
+                          validator: notEmptyValidator,
                         ),
                         const SizedBox(
                           height: 15,

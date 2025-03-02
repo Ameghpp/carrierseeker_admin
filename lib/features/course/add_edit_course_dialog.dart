@@ -101,7 +101,7 @@ class _AddEditCourseDialogState extends State<AddEditCourseDialog> {
                   maxLines: 3,
                   labelText: 'Description',
                   controller: _descriptionController,
-                  validator: alphanumericWithSpaceValidator,
+                  validator: notEmptyValidator,
                 ),
               ],
             ),
